@@ -27,7 +27,7 @@ public class commandSend implements Listener {
             if (p.hasPermission("chatmanager.socialspy")) {
                 if (!pl.hasPermission("chatmanager.socialspy.bypass")) {
                     if (plugin.socialspyList.contains(p.getName())) {
-                        String message = plugin.cc(ConfigVariable.socialSpy.replace("{PLAYER}", name).replace("{COMMAND}", command));
+                        String message = plugin.color(ConfigVariable.socialSpy.replace("{PLAYER}", name).replace("{COMMAND}", command));
                         p.sendMessage(message);
                     }
                 }
@@ -36,9 +36,9 @@ public class commandSend implements Listener {
                 if (ConfigVariable.cmdAlertEnabled) {
                     if (!pl.hasPermission("chatmanager.alertcmd.bypass")) {
                         if (ConfigVariable.cmdAlert.contains(command.split("/")[1].split(" ")[0].split(":")[0])) {
-                            String message = plugin.cc(ConfigVariable.commandAlert.replace("{PLAYER}", name).replace("{COMMAND}", command));
+                            String message = plugin.color(ConfigVariable.commandAlert.replace("{PLAYER}", name).replace("{COMMAND}", command));
                             p.sendMessage(message);
-                            String plMessage = plugin.cc(ConfigVariable.cancelledCommand);
+                            String plMessage = plugin.color(ConfigVariable.cancelledCommand);
                             pl.sendMessage(plMessage);
                             e.setCancelled(true);
                         }

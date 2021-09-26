@@ -29,10 +29,10 @@ public class MessageSender implements Listener {
         msg = e.getMessage();
 
         if (p.hasPermission("chatManager.colors")) {
-            msg = plugin.cc(msg);
+            msg = plugin.color(msg);
         }
 
-        e.setFormat(plugin.cc(ConfigVariable.messageFormat.replace("{GROUP}", plugin.getGroup(p)).replace("{PLAYER}", p.getName()).replace("{PREFIX}", plugin.getPrefix(p)).replace("{SUFFIX}", plugin.getSuffix(p)).replace("{MESSAGE}", msg)));
+        e.setFormat(plugin.color(ConfigVariable.messageFormat.replace("{GROUP}", plugin.getGroup(p)).replace("{PLAYER}", p.getName()).replace("{PREFIX}", plugin.getPrefix(p)).replace("{SUFFIX}", plugin.getSuffix(p)).replace("{MESSAGE}", msg)));
         if (plugin.chatMuted) {
             if (!p.hasPermission("chatmanager.mutebypass")) {
                 e.setCancelled(true);

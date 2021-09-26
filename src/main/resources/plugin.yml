@@ -1,4 +1,4 @@
-main: me.mrliam2614.chatManager.ChatManager
+main: me.mrliam2614.chatManager.chatManager
 name: ChatManager
 version: 5.0.0
 api-version: 1.16

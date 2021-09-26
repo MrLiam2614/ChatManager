@@ -33,6 +33,7 @@ public class chatManager extends JavaPlugin
     public FileConfiguration MConfig;
     public String lang;
     public ArrayList<String> socialspyList = new ArrayList<>();
+    public ConfigVariable configVariable;
 
     //MySql
     public String MySqlHost, MySqlPort, MySqlDatabase, MySqlUsername, MySqlPassword, MySqlTable;
@@ -40,13 +41,16 @@ public class chatManager extends JavaPlugin
     //OnEnable
     @Override
     public void onEnable() {
-        facilitisAPI = new FacilitisAPI();
+        facilitisAPI.messages.EnableMessage(this);
+        this.saveDefaultConfig();
+
         lang = this.getConfig().getString("lang");
         facilitisAPI.config.generateConfig(this, "message_" + lang + ".yml");
         MConfig = facilitisAPI.config.getConfig(this, "message_" + lang + ".yml");
 
         this.getServer().getPluginManager().registerEvents(this, this);
         reloadConfig();
+        configVariable = new ConfigVariable(this);
 
         //MySql
         String MySqlTableColumns = "(`Prefix` text NULL,`Group` text NULL,`Suffix` text NULL)";
@@ -87,17 +91,12 @@ public class chatManager extends JavaPlugin
     //OnDisable
     @Override
     public void onDisable() {
-        System.out.println("ChatManager Disabled");
+        facilitisAPI.messages.DisableMessage(this);
     }
 
-    public void consoleMessage(String message) {
-        console.sendMessage(cc(message));
+    public String color(String message){
+        return facilitisAPI.strUtils.colored(message);
     }
-
-    public String cc(String input) {
-        return ChatColor.translateAlternateColorCodes('&', input);
-    }
-
 
     public String getPrefix(Player p) {
         String group = getGroup(p);
@@ -112,7 +111,9 @@ public class chatManager extends JavaPlugin
                 group = "default";
             }
             prefix = this.getConfig().getString("groups." + group + ".prefix");
-            if (prefix.equalsIgnoreCase("null"))
+            if(prefix == null)
+                prefix = "";
+            if(prefix.equalsIgnoreCase("null") | prefix.equalsIgnoreCase("none"))
                 prefix = "";
         }
         return prefix;
@@ -132,7 +133,9 @@ public class chatManager extends JavaPlugin
             }
             suffix = this.getConfig().getString("groups." + group + ".suffix");
         }
-        if (suffix.equalsIgnoreCase("null"))
+        if(suffix == null)
+            suffix = "";
+        if(suffix.equalsIgnoreCase("null") | suffix.equalsIgnoreCase("none"))
             suffix = "";
         return suffix;
     }

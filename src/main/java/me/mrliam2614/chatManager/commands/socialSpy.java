@@ -17,10 +17,10 @@ public class socialSpy {
         System.out.println("Dio Cane " + pName);
         if (plugin.socialspyList.contains(pName)) {
             plugin.socialspyList.remove(pName);
-            player.sendMessage(plugin.cc(ConfigVariable.sspyDisabled));
+            player.sendMessage(plugin.color(ConfigVariable.sspyDisabled));
         } else {
             plugin.socialspyList.add(pName);
-            player.sendMessage(plugin.cc(ConfigVariable.sspyEnabled));
+            player.sendMessage(plugin.color(ConfigVariable.sspyEnabled));
         }
     }
 

@@ -25,18 +25,18 @@ public class ConfigVariable {
         lang = plugin.getConfig().getString("lang");
 
         //MESSAGES
-        NoPermMSG = plugin.cc(mConfig.getString("message.NoPerm"));
-        consoleError = plugin.cc(mConfig.getString("message.consoleError"));
-        reload = plugin.cc(mConfig.getString("message.reload"));
-        chatUnmuted = plugin.cc(mConfig.getString("message.chatUnmuted"));
-        chatMuted = plugin.cc(mConfig.getString("message.chatMuted"));
-        prefixUpdated = plugin.cc(mConfig.getString("message.prefixUpdate"));
-        suffixUpdated = plugin.cc(mConfig.getString("message.suffixUpdate"));
-        socialSpy = plugin.cc(mConfig.getString("message.socialSpy"));
-        sspyDisabled = plugin.cc(mConfig.getString("message.socialSpyEnabled"));
-        sspyEnabled = plugin.cc(mConfig.getString("message.socialSpyDisabled"));
-        commandAlert = plugin.cc(mConfig.getString("message.commandAlert"));
-        cancelledCommand = plugin.cc(mConfig.getString("message.playerAlert"));
+        NoPermMSG = plugin.color(mConfig.getString("message.NoPerm"));
+        consoleError = plugin.color(mConfig.getString("message.consoleError"));
+        reload = plugin.color(mConfig.getString("message.reload"));
+        chatUnmuted = plugin.color(mConfig.getString("message.chatUnmuted"));
+        chatMuted = plugin.color(mConfig.getString("message.chatMuted"));
+        prefixUpdated = plugin.color(mConfig.getString("message.prefixUpdate"));
+        suffixUpdated = plugin.color(mConfig.getString("message.suffixUpdate"));
+        socialSpy = plugin.color(mConfig.getString("message.socialSpy"));
+        sspyDisabled = plugin.color(mConfig.getString("message.socialSpyEnabled"));
+        sspyEnabled = plugin.color(mConfig.getString("message.socialSpyDisabled"));
+        commandAlert = plugin.color(mConfig.getString("message.commandAlert"));
+        cancelledCommand = plugin.color(mConfig.getString("message.playerAlert"));
 
         //BOOLEAN
         autoUpd = plugin.getConfig().getBoolean("autodownload");
