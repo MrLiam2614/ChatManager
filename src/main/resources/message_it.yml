@@ -1,0 +1,13 @@
+message:
+  NoPerm: "&4Non hai il permesso per utilizzare questo comando!"
+  consoleError: "&6Chat Manager &4Questo comando non può essere eseguito dalla console!"
+  reload: "&7[&9ChatManager&7] e' stato ricaricato!"
+  chatUnmuted: "&9La chat e' stata smutata!"
+  chatMuted: "&4La chat e' stata mutata!"
+  prefixUpdate: "&aIl prefisso per il gruppo &7{GROUP} &ae' ora &7{PREFIX}"
+  suffixUpdate: "&aIl suffisso per il gruppo &7{GROUP} &ae' ora &7{SUFFIX}"
+  socialSpy: "&9SocialSpy: &6{PLAYER} &7ha utilizzato il comando: &6{COMMAND}"
+  socialSpyEnabled: "&9SocialSpy &aabilitato"
+  socialSpyDisabled: "&9SocialSpy &cdisabilitato"
+  commandAlert: "&7[&4Command Alert&7] &6{PLAYER} &7sta utilizzando il comando: &4{COMMAND}"
+  playerAlert: "&4Questo comando e' stato disabilitato, il nostro staff e' stato avvisato del tuo tentativo di eseguirlo!"

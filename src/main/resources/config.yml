@@ -1,0 +1,42 @@
+# +----------------------------+#
+# |    ChatManager V.5.0.0     |#
+# |     Config Version 3       |#
+# |                            |#
+# |     Plugin Developer       |#
+# |        MrLiam2614          |#
+# +----------------------------+#
+##Don't remove the default group! It's for not added groups!
+# Don't change this value!
+cversion: 3
+
+mySql:
+  enable: false
+  host: "127.0.0.1"
+  port: "3306"
+  username: ""
+  password: ""
+  database: "chatManager"
+  tablePrefix: "chatManager_"
+
+lang: 'en'
+autodownload: true
+commandAlert:
+  enable: true
+  commands:
+    - 'op'
+    - 'deop'
+    - 'minecraft'
+    - 'pl'
+    - 'bukkit'
+    - 'plugin'
+    - 'plugins'
+
+chatDisplay: "{PREFIX} {PLAYER} {SUFFIX} &7> &6{MESSAGE}"
+
+groups:
+  default:
+    prefix: "&7[&6default&7]"
+    suffix: null
+  owner:
+    prefix: "&7[&9Owner&7]"
+    suffix: null

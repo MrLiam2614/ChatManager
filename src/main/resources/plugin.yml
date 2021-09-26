@@ -1,0 +1,16 @@
+main: me.mrliam2614.chatManager.ChatManager
+name: ChatManager
+version: 5.0.0
+api-version: 1.16
+author: MrLiam2614
+description: Make your server's chat cool!
+depend: [FacilitisAPI, Vault]
+commands:
+  mutechat:
+    description: Mute the chat!
+  socialspy:
+    aliases: [sspy]
+    description: check your players commands and private messages!
+  chatmanager:
+    aliases: [cm]
+    description: Configure chatmanager in game!
