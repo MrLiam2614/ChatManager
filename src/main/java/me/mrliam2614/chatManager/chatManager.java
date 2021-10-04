@@ -1,6 +1,7 @@
 package me.mrliam2614.chatManager;
 
 import me.mrliam2614.FacilitisAPI.FacilitisAPI;
+import me.mrliam2614.FacilitisAPI.config.FConfig;
 import me.mrliam2614.chatManager.commands.mainCMD;
 import me.mrliam2614.chatManager.config.ConfigVariable;
 import me.mrliam2614.chatManager.events.MessageSender;
@@ -24,13 +25,10 @@ public class chatManager extends JavaPlugin
 
     public boolean chatMuted = false;
 
-    public Object consoleMessage;
-    public String Ver = "2.0.0";
-    public int pluginID = 77583;
     private int mysqlReturn = 0;
     //public String Ver = "updating";
 
-    public FileConfiguration MConfig;
+    public FConfig MConfig;
     public String lang;
     public ArrayList<String> socialspyList = new ArrayList<>();
     public ConfigVariable configVariable;
@@ -45,8 +43,7 @@ public class chatManager extends JavaPlugin
         this.saveDefaultConfig();
 
         lang = this.getConfig().getString("lang");
-        facilitisAPI.config.generateConfig(this, "message_" + lang + ".yml");
-        MConfig = facilitisAPI.config.getConfig(this, "message_" + lang + ".yml");
+        MConfig =  new FConfig(this, "message_" + lang + ".yml");
 
         this.getServer().getPluginManager().registerEvents(this, this);
         reloadConfig();

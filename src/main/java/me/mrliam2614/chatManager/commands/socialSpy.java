@@ -14,7 +14,6 @@ public class socialSpy {
 
     public void spy(Player player) {
         String pName = player.getName();
-        System.out.println("Dio Cane " + pName);
         if (plugin.socialspyList.contains(pName)) {
             plugin.socialspyList.remove(pName);
             player.sendMessage(plugin.color(ConfigVariable.sspyDisabled));

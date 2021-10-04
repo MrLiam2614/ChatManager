@@ -16,7 +16,7 @@ public class ConfigVariable {
 
     public ConfigVariable(chatManager plugin) {
         plugin.reloadConfig();
-        FileConfiguration mConfig = plugin.MConfig;
+        FileConfiguration mConfig = plugin.MConfig.getConfig();
 
         messageFormat = plugin.getConfig().getString("chatDisplay");
         cmdAlert = plugin.getConfig().getStringList("commandAlert.commands");
