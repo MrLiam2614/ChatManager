@@ -1,8 +1,8 @@
-package me.mrliam2614.chatManager.events;
+package me.mrliam2614.events;
 
 
-import me.mrliam2614.chatManager.chatManager;
-import me.mrliam2614.chatManager.config.ConfigVariable;
+import me.mrliam2614.chatManager;
+import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

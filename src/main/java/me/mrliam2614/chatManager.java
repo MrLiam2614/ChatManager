@@ -1,15 +1,11 @@
-package me.mrliam2614.chatManager;
+package me.mrliam2614;
 
-import me.mrliam2614.FacilitisAPI.FacilitisAPI;
-import me.mrliam2614.FacilitisAPI.config.FConfig;
-import me.mrliam2614.chatManager.commands.mainCMD;
-import me.mrliam2614.chatManager.config.ConfigVariable;
-import me.mrliam2614.chatManager.events.MessageSender;
-import me.mrliam2614.chatManager.events.commandSend;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
+import me.mrliam2614.commands.mainCMD;
+import me.mrliam2614.config.ConfigVariable;
+import me.mrliam2614.events.MessageSender;
+import me.mrliam2614.events.commandSend;
+import me.mrliam2614.config.FConfig;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -17,9 +13,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 
-public class chatManager extends JavaPlugin
-        implements Listener {
-    public FacilitisAPI facilitisAPI = (FacilitisAPI) Bukkit.getServer().getPluginManager().getPlugin("FacilitisAPI");
+public class chatManager extends JavaPlugin implements Listener {
+    public FacilitisAPI facilitisAPI;
 
     ConsoleCommandSender console = getServer().getConsoleSender();
 
@@ -39,11 +34,12 @@ public class chatManager extends JavaPlugin
     //OnEnable
     @Override
     public void onEnable() {
+        facilitisAPI = FacilitisAPI.getInstance();
         facilitisAPI.messages.EnableMessage(this);
         this.saveDefaultConfig();
 
         lang = this.getConfig().getString("lang");
-        MConfig =  new FConfig(this, "message_" + lang + ".yml");
+        MConfig = new FConfig(this, "message_" + lang + ".yml");
 
         this.getServer().getPluginManager().registerEvents(this, this);
         reloadConfig();
@@ -91,55 +87,63 @@ public class chatManager extends JavaPlugin
         facilitisAPI.messages.DisableMessage(this);
     }
 
-    public String color(String message){
+    public String color(String message) {
         return facilitisAPI.strUtils.colored(message);
     }
 
     public String getPrefix(Player p) {
-        String group = getGroup(p);
         String prefix = "";
-        if (ConfigVariable.MySqlEnable) {
-            if (facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Group") == "") {
-                group = "default";
+        String groups[] = getGroup(p);
+        for (String group : groups) {
+            if (prefix == "" | prefix == null) {
+                if (ConfigVariable.MySqlEnable) {
+                    if (facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Group") == "") {
+                        group = "default";
+                    }
+                    prefix = facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Prefix");
+                } else {
+                    if (this.getConfig().getString("groups." + group) == null) {
+                        group = "default";
+                    }
+                    prefix = this.getConfig().getString("groups." + group + ".prefix");
+                    if (prefix == null)
+                        prefix = "";
+                    if (prefix.equalsIgnoreCase("null") | prefix.equalsIgnoreCase("none"))
+                        prefix = "";
+                }
             }
-            prefix = facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Prefix");
-        } else {
-            if (this.getConfig().getString("groups." + group) == null) {
-                group = "default";
-            }
-            prefix = this.getConfig().getString("groups." + group + ".prefix");
-            if(prefix == null)
-                prefix = "";
-            if(prefix.equalsIgnoreCase("null") | prefix.equalsIgnoreCase("none"))
-                prefix = "";
         }
         return prefix;
     }
 
     public String getSuffix(Player p) {
         String suffix = "";
-        String group = getGroup(p);
-        if (ConfigVariable.MySqlEnable) {
-            if (facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Group") == "") {
-                group = "default";
+        String groups[] = getGroup(p);
+        for (String group : groups) {
+            if (suffix == "" | suffix == null) {
+                if (ConfigVariable.MySqlEnable) {
+                    if (facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Group") == "") {
+                        group = "default";
+                    }
+                    suffix = facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Suffix");
+                } else {
+                    if (this.getConfig().getString("groups." + group) == null) {
+                        group = "default";
+                    }
+                    suffix = this.getConfig().getString("groups." + group + ".suffix");
+                }
+                if (suffix == null)
+                    suffix = "";
+                if (suffix.equalsIgnoreCase("null") | suffix.equalsIgnoreCase("none"))
+                    suffix = "";
             }
-            suffix = facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Suffix");
-        } else {
-            if (this.getConfig().getString("groups." + group) == null) {
-                group = "default";
-            }
-            suffix = this.getConfig().getString("groups." + group + ".suffix");
         }
-        if(suffix == null)
-            suffix = "";
-        if(suffix.equalsIgnoreCase("null") | suffix.equalsIgnoreCase("none"))
-            suffix = "";
         return suffix;
     }
 
-    public String getGroup(Player p) {
-        String group = "";
-        group = facilitisAPI.vault.getPermissions().getPrimaryGroup(p.getWorld().getName(), p);
+    public String[] getGroup(Player p) {
+        String[] group;
+        group = facilitisAPI.vault.getPermissions().getPlayerGroups(p);
         return group;
     }
 }

@@ -1,7 +1,7 @@
-package me.mrliam2614.chatManager.commands;
+package me.mrliam2614.commands;
 
-import me.mrliam2614.chatManager.chatManager;
-import me.mrliam2614.chatManager.config.ConfigVariable;
+import me.mrliam2614.chatManager;
+import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 

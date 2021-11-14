@@ -1,23 +1,18 @@
-package me.mrliam2614.chatManager.events;
+package me.mrliam2614.events;
 
-import me.mrliam2614.chatManager.chatManager;
-import me.mrliam2614.chatManager.config.ConfigVariable;
-import net.milkbowl.vault.chat.Chat;
-import org.bukkit.Bukkit;
+import me.mrliam2614.chatManager;
+import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.plugin.ServicePriority;
 
 
 public class MessageSender implements Listener {
     public chatManager plugin;
-    private Chat cprovider;
 
     public MessageSender(chatManager plugin) {
         this.plugin = plugin;
-        Bukkit.getServicesManager().register(Chat.class, this.cprovider, this.plugin, ServicePriority.Highest);
     }
 
     private String msg;
@@ -32,7 +27,7 @@ public class MessageSender implements Listener {
             msg = plugin.color(msg);
         }
 
-        e.setFormat(plugin.color(ConfigVariable.messageFormat.replace("{GROUP}", plugin.getGroup(p)).replace("{PLAYER}", p.getName()).replace("{PREFIX}", plugin.getPrefix(p)).replace("{SUFFIX}", plugin.getSuffix(p)).replace("{MESSAGE}", msg)));
+        e.setFormat(plugin.color(ConfigVariable.messageFormat.replace("{PLAYER}", p.getName()).replace("{PREFIX}", plugin.getPrefix(p)).replace("{SUFFIX}", plugin.getSuffix(p)).replace("{MESSAGE}", msg)));
         if (plugin.chatMuted) {
             if (!p.hasPermission("chatmanager.mutebypass")) {
                 e.setCancelled(true);

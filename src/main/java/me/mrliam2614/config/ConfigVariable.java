@@ -1,6 +1,6 @@
-package me.mrliam2614.chatManager.config;
+package me.mrliam2614.config;
 
-import me.mrliam2614.chatManager.chatManager;
+import me.mrliam2614.chatManager;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
