@@ -1,6 +1,6 @@
 package me.mrliam2614.config;
 
-import me.mrliam2614.chatManager;
+import me.mrliam2614.ChatManager;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -11,10 +11,10 @@ public class ConfigVariable {
             commandAlert, cancelledCommand, sspyDisabled, sspyEnabled, MySqlHost, MySqlPort, MySqlDatabase, MySqlTablePrefix, MySqlUsername, MySqlPassword;
     public static boolean autoUpd, cmdAlertEnabled, MySqlEnable;
 
-    public static chatManager plugin;
+    public static ChatManager plugin;
     public static List<String> cmdAlert = new ArrayList<String>();
 
-    public ConfigVariable(chatManager plugin) {
+    public ConfigVariable(ChatManager plugin) {
         plugin.reloadConfig();
         FileConfiguration mConfig = plugin.MConfig.getConfig();
 
@@ -33,8 +33,8 @@ public class ConfigVariable {
         prefixUpdated = plugin.color(mConfig.getString("message.prefixUpdate"));
         suffixUpdated = plugin.color(mConfig.getString("message.suffixUpdate"));
         socialSpy = plugin.color(mConfig.getString("message.socialSpy"));
-        sspyDisabled = plugin.color(mConfig.getString("message.socialSpyEnabled"));
-        sspyEnabled = plugin.color(mConfig.getString("message.socialSpyDisabled"));
+        sspyDisabled = plugin.color(mConfig.getString("message.socialSpyDisabled"));
+        sspyEnabled = plugin.color(mConfig.getString("message.socialSpyEnabled"));
         commandAlert = plugin.color(mConfig.getString("message.commandAlert"));
         cancelledCommand = plugin.color(mConfig.getString("message.playerAlert"));
 

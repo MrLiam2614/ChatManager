@@ -1,15 +1,15 @@
 package me.mrliam2614.commands;
 
-import me.mrliam2614.chatManager;
+import me.mrliam2614.ChatManager;
 import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 
-public class mutechatCMD implements Listener {
-    public chatManager plugin;
+public class CommandMuteChat implements Listener {
+    public ChatManager plugin;
 
-    public mutechatCMD(chatManager plugin) {
+    public CommandMuteChat(ChatManager plugin) {
         this.plugin = plugin;
     }
 

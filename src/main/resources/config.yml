@@ -18,6 +18,10 @@ mySql:
   database: "chatManager"
   tablePrefix: "chatManager_"
 
+##Remove default from prefix if someone has multi groups
+defaultGroup: 'default'
+singlePrefix: true
+singleSuffix: false
 lang: 'en'
 autodownload: true
 commandAlert:
@@ -32,6 +36,11 @@ commandAlert:
     - 'plugins'
 
 chatDisplay: "{PREFIX} {PLAYER} {SUFFIX} &7> &6{MESSAGE}"
+chatColor: "§6"
+tags:
+  enabled: false
+  ignoredGroups:
+    - default
 
 groups:
   default:

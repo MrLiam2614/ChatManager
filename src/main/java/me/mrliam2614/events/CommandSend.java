@@ -1,7 +1,7 @@
 package me.mrliam2614.events;
 
 
-import me.mrliam2614.chatManager;
+import me.mrliam2614.ChatManager;
 import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,11 +9,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class commandSend implements Listener {
+public class CommandSend implements Listener {
 
-    private chatManager plugin;
+    private ChatManager plugin;
 
-    public commandSend(chatManager plugin) {
+    public CommandSend(ChatManager plugin) {
         this.plugin = plugin;
     }
 

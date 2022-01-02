@@ -1,14 +1,14 @@
 package me.mrliam2614.commands;
 
-import me.mrliam2614.chatManager;
+import me.mrliam2614.ChatManager;
 import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 
-public class setupCMD implements Listener {
-    public chatManager plugin;
+public class CommandSetup implements Listener {
+    public ChatManager plugin;
 
-    public setupCMD(chatManager plugin) {
+    public CommandSetup(ChatManager plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package me.mrliam2614.commands;
 
-import me.mrliam2614.chatManager;
+import me.mrliam2614.ChatManager;
 import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,19 +8,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class mainCMD implements CommandExecutor {
-    public chatManager plugin;
-    mutechatCMD muteCMD;
-    helpCMD helpCMD;
-    socialSpy socialspy;
-    setupCMD setupCMD;
+    public ChatManager plugin;
+    private CommandMuteChat muteCMD;
+    private CommandHelp helpCMD;
+    private Socialspy socialspy;
+    private CommandSetup setupCMD;
 
-    public mainCMD(chatManager plugin) {
+    public mainCMD(ChatManager plugin) {
         this.plugin = plugin;
 
-        muteCMD = new mutechatCMD(plugin);
-        helpCMD = new helpCMD(plugin);
-        setupCMD = new setupCMD(plugin);
-        socialspy = new socialSpy(plugin);
+        muteCMD = new CommandMuteChat(plugin);
+        helpCMD = new CommandHelp(plugin);
+        setupCMD = new CommandSetup(plugin);
+        socialspy = new Socialspy(plugin);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -55,6 +55,7 @@ public class mainCMD implements CommandExecutor {
                     sender.sendMessage(ConfigVariable.NoPermMSG);
                 } else {
                     plugin.reloadConfig();
+                    plugin.update();
                     sender.sendMessage(ConfigVariable.reload);
                 }
             } else if (args[0].equalsIgnoreCase("socialspy")) {

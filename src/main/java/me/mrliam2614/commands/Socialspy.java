@@ -1,14 +1,14 @@
 package me.mrliam2614.commands;
 
-import me.mrliam2614.chatManager;
+import me.mrliam2614.ChatManager;
 import me.mrliam2614.config.ConfigVariable;
 import org.bukkit.entity.Player;
 
-public class socialSpy {
+public class Socialspy {
 
-    private chatManager plugin;
+    private ChatManager plugin;
 
-    public socialSpy(chatManager plugin) {
+    public Socialspy(ChatManager plugin) {
         this.plugin = plugin;
     }
 

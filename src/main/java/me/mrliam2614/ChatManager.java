@@ -2,18 +2,22 @@ package me.mrliam2614;
 
 import me.mrliam2614.commands.mainCMD;
 import me.mrliam2614.config.ConfigVariable;
-import me.mrliam2614.events.MessageSender;
-import me.mrliam2614.events.commandSend;
 import me.mrliam2614.config.FConfig;
+import me.mrliam2614.data.GroupHandler;
+import me.mrliam2614.data.Placeholders;
+import me.mrliam2614.events.CommandSend;
+import me.mrliam2614.events.MessageSender;
+import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 
-public class chatManager extends JavaPlugin implements Listener {
+public class ChatManager extends JavaPlugin implements Listener {
+    private static ChatManager instance;
+    public Placeholders placeholders;
     public FacilitisAPI facilitisAPI;
 
     ConsoleCommandSender console = getServer().getConsoleSender();
@@ -27,6 +31,12 @@ public class chatManager extends JavaPlugin implements Listener {
     public String lang;
     public ArrayList<String> socialspyList = new ArrayList<>();
     public ConfigVariable configVariable;
+    public GroupHandler groupHandler;
+
+    public boolean isPlaceholderAPI = false;
+
+    //A boolean
+    public boolean MySqlEnable;
 
     //MySql
     public String MySqlHost, MySqlPort, MySqlDatabase, MySqlUsername, MySqlPassword, MySqlTable;
@@ -34,6 +44,10 @@ public class chatManager extends JavaPlugin implements Listener {
     //OnEnable
     @Override
     public void onEnable() {
+        instance = this;
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            isPlaceholderAPI = true;
+        }
         facilitisAPI = FacilitisAPI.getInstance();
         facilitisAPI.messages.EnableMessage(this);
         this.saveDefaultConfig();
@@ -55,7 +69,7 @@ public class chatManager extends JavaPlugin implements Listener {
         MySqlUsername = ConfigVariable.MySqlUsername;
         MySqlPassword = ConfigVariable.MySqlPassword;
         MySqlTable = ConfigVariable.MySqlTablePrefix + "chatmanager";
-        boolean MySqlEnable = ConfigVariable.MySqlEnable;
+        MySqlEnable = ConfigVariable.MySqlEnable;
 
         if (MySqlEnable) {
             mysqlReturn = facilitisAPI.MySql.MySqlConnect(this, MySqlUsername, MySqlPassword, MySqlHost, MySqlPort, MySqlDatabase, MySqlTable, MySqlTableColumns, MySqlDefaultData);
@@ -72,13 +86,22 @@ public class chatManager extends JavaPlugin implements Listener {
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new MessageSender(this), this);
-        pm.registerEvents(new commandSend(this), this);
+        pm.registerEvents(new CommandSend(this), this);
 
         getCommand("mutechat").setExecutor(new mainCMD(this));
         getCommand("chatmanager").setExecutor(new mainCMD(this));
         getCommand("socialspy").setExecutor(new mainCMD(this));
 
         facilitisAPI.vault.Start();
+        groupHandler = new GroupHandler(this);
+        placeholders = new Placeholders(this);
+
+        startUpdater();
+    }
+
+
+    public String color(String message) {
+        return facilitisAPI.strUtils.colored(message);
     }
 
     //OnDisable
@@ -87,63 +110,19 @@ public class chatManager extends JavaPlugin implements Listener {
         facilitisAPI.messages.DisableMessage(this);
     }
 
-    public String color(String message) {
-        return facilitisAPI.strUtils.colored(message);
+    private void startUpdater() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, this::update, 20 * 60 * 3, 20 * 60 * 3);
     }
 
-    public String getPrefix(Player p) {
-        String prefix = "";
-        String groups[] = getGroup(p);
-        for (String group : groups) {
-            if (prefix == "" | prefix == null) {
-                if (ConfigVariable.MySqlEnable) {
-                    if (facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Group") == "") {
-                        group = "default";
-                    }
-                    prefix = facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Prefix");
-                } else {
-                    if (this.getConfig().getString("groups." + group) == null) {
-                        group = "default";
-                    }
-                    prefix = this.getConfig().getString("groups." + group + ".prefix");
-                    if (prefix == null)
-                        prefix = "";
-                    if (prefix.equalsIgnoreCase("null") | prefix.equalsIgnoreCase("none"))
-                        prefix = "";
-                }
-            }
-        }
-        return prefix;
+    public void update() {
+        groupHandler.update();
     }
 
-    public String getSuffix(Player p) {
-        String suffix = "";
-        String groups[] = getGroup(p);
-        for (String group : groups) {
-            if (suffix == "" | suffix == null) {
-                if (ConfigVariable.MySqlEnable) {
-                    if (facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Group") == "") {
-                        group = "default";
-                    }
-                    suffix = facilitisAPI.MySql.MySqlGet(this, MySqlTable, "Group", group, "Suffix");
-                } else {
-                    if (this.getConfig().getString("groups." + group) == null) {
-                        group = "default";
-                    }
-                    suffix = this.getConfig().getString("groups." + group + ".suffix");
-                }
-                if (suffix == null)
-                    suffix = "";
-                if (suffix.equalsIgnoreCase("null") | suffix.equalsIgnoreCase("none"))
-                    suffix = "";
-            }
-        }
-        return suffix;
+    public static ChatManager getInstance() {
+        return instance;
     }
 
-    public String[] getGroup(Player p) {
-        String[] group;
-        group = facilitisAPI.vault.getPermissions().getPlayerGroups(p);
-        return group;
+    public GroupHandler getGroupHandler() {
+        return groupHandler;
     }
 }
