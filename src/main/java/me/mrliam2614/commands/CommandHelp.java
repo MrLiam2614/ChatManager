@@ -16,7 +16,8 @@ public class CommandHelp implements Listener {
         sender.sendMessage("§7Alias for §a/chatmanager §7is §c/cm");
         sender.sendMessage("§a/chatmanager help §7- §6see commands list");
         sender.sendMessage("§a/chatmanager reload §7- §6reload plugin's config");
-        sender.sendMessage("§a/chatmanager setup [prefix - suffix] [group] [prefix] §7- §6Setup your config file from the game!");
+        sender.sendMessage("§a/chatmanager setup [prefix - suffix - color] [group] [prefix] §7- §6Setup your config file from the game!");
+        sender.sendMessage("§a/chatmanager simulate [groupList] §7- §6See the preview for a player in some groups!");
     }
 
 }

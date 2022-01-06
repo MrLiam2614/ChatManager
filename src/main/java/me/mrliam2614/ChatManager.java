@@ -60,8 +60,8 @@ public class ChatManager extends JavaPlugin implements Listener {
         configVariable = new ConfigVariable(this);
 
         //MySql
-        String MySqlTableColumns = "(`Prefix` text NULL,`Group` text NULL,`Suffix` text NULL)";
-        String MySqlDefaultData = "(`Prefix`, `Group`, `Suffix`) VALUES ('&7[&6Default&7]', 'default', '&7[&6Suffix&7]')";
+        String MySqlTableColumns = "(`Group` text NULL,`ChatColor` text NULL,`Prefix` text NULL,`Suffix` text NULL)";
+        String MySqlDefaultData = "(`Prefix`, `Group`, `Suffix`, `ChatColor`) VALUES ('&7[&6Default&7]', 'default', '&7[&6Suffix&7]', '&f')";
 
         MySqlHost = ConfigVariable.MySqlHost;
         MySqlPort = ConfigVariable.MySqlPort;

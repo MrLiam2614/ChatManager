@@ -33,7 +33,8 @@ public class GroupHandler {
                     String name = results.getString("Group");
                     String suffix = results.getString("Suffix");
                     String prefix = results.getString("Prefix");
-                    Group group = new Group(prefix, suffix, name);
+                    String color = results.getString("ChatColor");
+                    Group group = new Group(prefix, suffix, color, name);
                     groupList.add(group);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -51,8 +52,9 @@ public class GroupHandler {
 
                 String prefix = plugin.getConfig().getString(groupPath + ".prefix");
                 String suffix = plugin.getConfig().getString(groupPath + ".suffix");
+                String color = plugin.getConfig().getString(groupPath+".ChatColor");
 
-                Group toAdd = new Group(prefix, suffix, group);
+                Group toAdd = new Group(prefix, suffix, color, group);
                 groupList.add(toAdd);
             }
         }

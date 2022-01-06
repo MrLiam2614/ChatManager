@@ -1,12 +1,12 @@
 package me.mrliam2614.events;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.mrliam2614.ChatManager;
 import me.mrliam2614.config.ConfigVariable;
 import me.mrliam2614.reflection.Sounds;
-import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -21,7 +21,7 @@ public class MessageSender implements Listener {
     private String msg;
 
     @SuppressWarnings("static-access")
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void chatMessage(AsyncPlayerChatEvent e) {
         msg = e.getMessage();
         Player p = e.getPlayer();
@@ -35,11 +35,13 @@ public class MessageSender implements Listener {
             msg = plugin.color(msg);
         }
 
-        if (containPlayer(msg)) {
-            msg = replacePlayer(msg);
-            sendAdvise(msg);
-        }
         String format = ConfigVariable.messageFormat;
+
+        format = plugin.placeholders.passPlaceholders(format, p, "{message}");
+
+        if (containPlayer(msg)) {
+            msg = replacePlayer(format, msg, p);
+        }
 
         format = plugin.placeholders.passPlaceholders(format, p, msg);
 
@@ -55,20 +57,20 @@ public class MessageSender implements Listener {
         return false;
     }
 
-    private String replacePlayer(String msg) {
+    private String replacePlayer(String format, String msg, Player sender) {
+        String beforeMessage = format.substring(0, format.indexOf("{message}"));
+        String lastColor = ChatColor.getLastColors(ChatColor.translateAlternateColorCodes('&', beforeMessage)).replace('&', 'x');
+
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (msg.toLowerCase().contains(p.getName().toLowerCase())) {
-                msg = msg.replaceAll("(?i)" + p.getName(), "&c" + p.getName() + plugin.getConfig().getString("chatColor"));
+            if (msg.toLowerCase().contains(p.getName().toLowerCase()) && !p.getName().equalsIgnoreCase(sender.getName())) {
+                msg = msg.replaceAll("(?i)" + p.getName(), "§c" + p.getName() + lastColor);
+                sendAdvise(p);
             }
         }
         return msg;
     }
 
-    private void sendAdvise(String msg) {
-        for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (msg.toLowerCase().contains(p.getName().toLowerCase())) {
-                Sounds.pingPlayer(p);
-            }
-        }
+    private void sendAdvise(Player p) {
+        Sounds.pingPlayer(p);
     }
 }

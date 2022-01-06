@@ -1,11 +1,12 @@
 package me.mrliam2614.data;
 
 public class Group {
-    String prefix, suffix, groupName;
-    public Group(String prefix, String suffix, String groupName){
+    String prefix, suffix, groupName, chatColor;
+    public Group(String prefix, String suffix, String chatColor, String groupName){
         this.groupName = groupName;
         this.prefix = prefix;
         this.suffix = suffix;
+        this.chatColor = chatColor;
     }
 
     public String getGroupName() {
@@ -17,4 +18,5 @@ public class Group {
     public String getSuffix() {
         return suffix;
     }
+    public String getChatColor(){ return chatColor; }
 }
